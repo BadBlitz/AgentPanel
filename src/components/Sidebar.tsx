@@ -315,6 +315,8 @@ function useRepoDrag(): RepoDragHandlers {
   return {
     draggingId,
     onPointerDown: (e, id) => {
+      // A cancelled drag never gets its click, so don't let a stale flag eat this one.
+      suppressClick.current = false;
       if (e.button !== 0) return;
       // The remove button (and any other icon button) is not a drag handle.
       if ((e.target as HTMLElement).closest(".icon-btn")) return;
